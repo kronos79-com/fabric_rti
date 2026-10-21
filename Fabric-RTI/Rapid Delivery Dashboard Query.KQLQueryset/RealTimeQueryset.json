@@ -1,0 +1,21 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "4429ff81-d4d1-4f5f-b17b-7e697928f0c2",
+        "clusterUri": "",
+        "type": "Fabric",
+        "databaseItemId": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "cd7c227a-ed48-4b49-b61d-7b16a5089e49",
+        "content": "SilverRapidOrders\n| where ingestion_time() >= ago(60m)\n| count",
+        "title": "First Real Time Dashboard",
+        "dataSourceId": "4429ff81-d4d1-4f5f-b17b-7e697928f0c2"
+      }
+    ]
+  }
+}

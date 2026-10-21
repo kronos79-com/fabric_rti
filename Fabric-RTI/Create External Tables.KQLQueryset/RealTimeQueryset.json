@@ -1,0 +1,40 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "582bc62e-9fc8-4b0b-bbb3-e31552ffe010",
+        "clusterUri": "",
+        "type": "Fabric",
+        "databaseItemId": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "ae6fe8c4-d520-4a26-b755-49d6aba61657",
+        "content": ".execute database script <|\n// External tables - shortcuts\n// connect to operational Database with external table FabrikamCustomers\n.create external table extFabrikamCustomers(\n[CustomerID]: string\n,[FullName]: string\n,[Address]: string\n,[State]: string\n,[ZipCode]: string\n,[Latitude]: real\n,[Longitude]: real\n)\nkind=sql\ntable=[dbo.FabrikamCustomers]\n(\nh@'Server= fabrikamserverdb.database.windows.net,1433;Initial Catalog=fabrikamdb;User Id=Testuser;Password=Password123!'\n)\nwith\n(\ncreateifnotexists = true\n)\n\n// connect to operational Database with external table FabrikamResellerInventory\n.create external table extFabrikamResellerInventory (\n[PostalCityID]:long\n,[PhoneNumber]:string\n,[FaxNumber]:string\n,[WebsiteURL]:string\n,[DeliveryAddressLine1]:string\n,[DeliveryAddressLine2]:string\n,[DeliveryPostalCode]:long\n,[PostalAddressLine1]:string\n,[PostalAddressLine2]:string\n,[PostalPostalCode]:string\n,[ResellerID]:long\n,[ResellerName]:string\n,[ResellerCompany]:string\n,[StockItemID]:long\n,[StockItemName]:string\n,[InventoryLevel]:long\n,[Latitude]: real\n,[Longitude]: real\n)\nkind=sql\ntable=[dbo.FabrikamResellerInventory]\n(\nh@'Server= fabrikamserverdb.database.windows.net,1433;Initial Catalog=fabrikamdb;User Id=Testuser;Password=Password123!'\n)\nwith\n(\ncreateifnotexists = true\n)\n\n// connect to operational Database with external table FabrikamProducts\n.create external table extFabrikamProducts (\n[StockItemID]: long\n,[StockItemName]: string\n,[SupplierID]: long\n,[Size]: string\n,[IsChillerStock]: bool\n,[TaxRate]: real\n,[UnitPrice]: decimal\n,[RecommendedRetailPrice]: decimal\n,[TypicalWeightPerUnit]: real\n,[StockGroupName]: string\n,[StockGroupID]: long)\nkind=sql\ntable=[dbo.FabrikamProducts]\n(\nh@'Server= fabrikamserverdb.database.windows.net,1433;Initial Catalog=fabrikamdb;User Id=Testuser;Password=Password123!'\n)\nwith\n(\ncreateifnotexists = true\n)\n\n// connect to operational Database with external table FabrikamResellers\n.create external table extFabrikamResellers(\n[ResellerID]: long\n,[ResellerName]: string\n,[DeliveryAddressLine1]: string\n,[DeliveryAddressLine2]: string\n,[DeliveryPostalCode]: long\n,[Latitude]: real\n,[Longitude]: real\n,[ResellerEntraID]: string\n)\nkind=sql\ntable=[dbo.FabrikamResellers]\n(\nh@'Server= fabrikamserverdb.database.windows.net,1433;Initial Catalog=fabrikamdb;User Id=Testuser;Password=Password123!'\n)\nwith\n(\ncreateifnotexists = true\n)",
+        "title": "Tab",
+        "dataSourceId": "582bc62e-9fc8-4b0b-bbb3-e31552ffe010"
+      },
+      {
+        "id": "c7e64c57-c4d7-4f88-b7d7-bd307c44e740",
+        "content": ".execute database script <|\n.alter table RapidDelivery    folder \"Bronze\"\n.alter table StandardDelivery folder \"Bronze\"\n.alter table TruckMovement    folder \"Bronze\"",
+        "title": "Organise Tables",
+        "dataSourceId": "582bc62e-9fc8-4b0b-bbb3-e31552ffe010"
+      },
+      {
+        "id": "6ed733b6-7639-43b9-abc2-d9817e26b440",
+        "content": ".execute database script <|\n.set-or-replace FabrikamCustomers           with (folder = \"Bronze\")   <| external_table('extFabrikamCustomers')\n.set-or-replace FabrikamResellers           with (folder = \"Bronze\")   <| external_table('extFabrikamResellers') \n.set-or-replace FabrikamResellerInventory   with (folder = \"Bronze\")   <| external_table('extFabrikamResellerInventory')\n.set-or-replace FabrikamProducts            with (folder = \"Bronze\")   <| external_table('extFabrikamProducts')",
+        "title": "Create Dimensions",
+        "dataSourceId": "582bc62e-9fc8-4b0b-bbb3-e31552ffe010"
+      },
+      {
+        "id": "fa624324-a339-4e9e-a064-d65961c8e4f6",
+        "content": ".create table FabrikamDeliveryTrucks(\n    TruckID: real,\n    TruckType: string,\n    Fullname: string,\n    TruckEntraID: string,\n    StartDate: datetime\n) with (folder = \"Bronze\")",
+        "title": "Create Delivery Trucks Dimension",
+        "dataSourceId": "582bc62e-9fc8-4b0b-bbb3-e31552ffe010"
+      }
+    ],
+    "querysetType": "Standalone"
+  }
+}

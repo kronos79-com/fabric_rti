@@ -1,0 +1,22 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "f1a3da0d-ac27-48b2-a74d-4494db538c36",
+        "clusterUri": "",
+        "type": "Fabric",
+        "databaseItemId": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "ec9f4729-4c05-49c6-bb1a-b1f1026642f0",
+        "content": "// Return Sales by ProductCategory and ProductName\nRapidDelivery\n| join kind = inner (FabrikamProducts) on $left.ProductKey == $right.StockItemID\n| summarize \n            TotalSales = sum(todecimal(UnitPrice)), \n            TotalQuantity = sum(OrderQuantity) \n        by StockGroupName, StockItemName\n| project-rename ProductCategory = StockGroupName, ProductName = StockItemName\n| order by TotalSales desc",
+        "title": "Tab",
+        "dataSourceId": "f1a3da0d-ac27-48b2-a74d-4494db538c36"
+      }
+    ],
+    "querysetType": "Standalone"
+  }
+}

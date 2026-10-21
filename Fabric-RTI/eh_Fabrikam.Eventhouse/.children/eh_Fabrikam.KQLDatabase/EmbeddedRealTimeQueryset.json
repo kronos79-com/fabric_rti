@@ -1,0 +1,28 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "d1be879b-80e0-4610-9860-28aa48a595ad",
+        "clusterUri": "https://trd-1ssj7nd1hqe2q3xaa5.z5.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "572e0b5e-68fa-42d7-b80e-13e1cbe2c71f"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "b09c8850-44f4-41aa-8393-b598b8dd9625",
+        "content": "//***********************************************************************************************************\n// Here are two articles to help you get started with KQL:\n// KQL reference guide - https://aka.ms/KQLguide\n// SQL - KQL conversions - https://aka.ms/sqlcheatsheet\n//***********************************************************************************************************\n\n// Use \"take\" to view a sample number of records in the table and check the data.\nRapidDelivery\n| take 100\n\n// See how many records are in the table.\nRapidDelivery\n| count\n\n// This query returns the number of ingestions per hour in the given table.\nYOUR_TABLE_HERE\n| summarize IngestionCount = count() by bin(ingestion_time(), 1h)\n\n// Return specified columns\nRapidDelivery\n| take 5\n| project CustomerKey, OrderDate, ProductKey, UnitPrice, OrderQuantity\n\nRapidDelivery | getschema\n\nRapidDelivery\n| take 5\n| project-away ShipDate\n\n// Combine Standard Delivery and Rapid Delivery with a union operation, return 100 rows and limit columns returned\nRapidDelivery\n| union StandardDelivery \n| take 100\n| project SalesOrderNumber, OrderDate, ProductKey, OrderQuantity, UnitPrice\n\n// Add a filter to limit the final result set\n// Return only rows where ProductKey = 147\nRapidDelivery\n| where ProductKey == 147\n\n// Return only products from a list using IN\nRapidDelivery\n| where ProductKey in(22, 31, 147)\n\n// Rename SalesOrderNumber to OrderNumber\nRapidDelivery\n| where ProductKey in(22, 31, 147)\n| project-rename OrderNumber = SalesOrderNumber\n\n// Count the number of transactions for products (22, 31, 147)\nRapidDelivery\n| where ProductKey in(22, 31, 147)\n| project-rename OrderNumber = SalesOrderNumber\n| count\n\n// Return distinct count of products\nRapidDelivery\n| summarize distinctProductKeys = dcount(ProductKey)\n\n// Performing Basic Aggregations\nRapidDelivery\n| summarize TotalSales = sum(UnitPrice * OrderQuantity)\n\n// Summarize TotalSales and TransactionTotal\n// Group by ProductKey\n// Order by TotalSales Descending\nRapidDelivery\n| summarize \n        TotalSales = sum(UnitPrice * OrderQuantity), \n        TransactionTotal = count() \n    by ProductKey\n| order by TotalSales desc",
+        "title": "Tab",
+        "dataSourceId": "d1be879b-80e0-4610-9860-28aa48a595ad"
+      },
+      {
+        "id": "f5d2af0a-24b9-47f0-a564-380ca25ffa88",
+        "content": "-- \nexplain\nSELECT \n    ProductKey, SUM(OrderQuantity) AS TotalQuantity From RapidDelivery\nGROUP BY\n    ProductKey\n\nRapidDelivery\n| summarize TotalQuantity=sum(OrderQuantity) by ProductKey",
+        "title": "",
+        "dataSourceId": "d1be879b-80e0-4610-9860-28aa48a595ad"
+      }
+    ],
+    "querysetType": "Embedded"
+  }
+}

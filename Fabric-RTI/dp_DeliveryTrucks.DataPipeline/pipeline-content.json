@@ -1,0 +1,134 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "AzureSqlTable",
+              "typeProperties": {
+                "schema": "dbo",
+                "table": "FabrikamDeliveryTrucks",
+                "database": "fabrikamdb"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "3bddb175-1b55-4487-8e2e-df8b7b42ff43"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "KustoDatabaseSink",
+            "datasetSettings": {
+              "type": "KustoDatabaseTable",
+              "typeProperties": {
+                "table": "FabrikamDeliveryTrucks"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "eh_Fabrikam",
+                "properties": {
+                  "type": "KustoDatabase",
+                  "typeProperties": {
+                    "endpoint": "https://trd-1ssj7nd1hqe2q3xaa5.z5.kusto.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "database": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "TruckID",
+                  "type": "Double",
+                  "physicalType": "float"
+                },
+                "sink": {
+                  "name": "TruckID",
+                  "type": "Double",
+                  "physicalType": "real"
+                }
+              },
+              {
+                "source": {
+                  "name": "TruckType",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "10"
+                },
+                "sink": {
+                  "name": "TruckType",
+                  "type": "String",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "FullName",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "50"
+                },
+                "sink": {
+                  "name": "Fullname",
+                  "type": "String",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "TruckEntraID",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "50"
+                },
+                "sink": {
+                  "name": "TruckEntraID",
+                  "type": "String",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "StartDate",
+                  "type": "DateTime",
+                  "physicalType": "date"
+                },
+                "sink": {
+                  "name": "StartDate",
+                  "type": "DateTime",
+                  "physicalType": "datetime"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Copy_c25",
+        "dependsOn": []
+      }
+    ]
+  }
+}

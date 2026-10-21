@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLQueryset",
+    "displayName": "Adhoc Queries",
+    "description": "Adhoc Queries"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6b06cc05-261d-98dc-418e-5ba67051f2a8"
+  }
+}

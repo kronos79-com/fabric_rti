@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLQueryset",
+    "displayName": "Silver Layer",
+    "description": "Silver Layer"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bb3af2db-13d5-937b-40ff-086286981e97"
+  }
+}

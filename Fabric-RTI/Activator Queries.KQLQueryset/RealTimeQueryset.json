@@ -1,0 +1,27 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "8f60e5c6-2587-44ad-9ab4-952a2e21e7e5",
+        "clusterUri": "",
+        "type": "Fabric",
+        "databaseItemId": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "6d2506dc-5915-489a-b408-8f94470d4873",
+        "content": "SilverRapidOrders\n| extend OrderTime = ingestion_time()\n| where OrderTime >= ago(10m)\n| project tostring(SalesOrderNumber), OrderTime, CustomerName, ProductName, OrderQuantity,round(TotalSalesAmount,2), ResellerName, ResellerEntraID\n| sort by OrderTime, SalesOrderNumber\n\n",
+        "title": "Reseller Notification",
+        "dataSourceId": "8f60e5c6-2587-44ad-9ab4-952a2e21e7e5"
+      },
+      {
+        "id": "291c0145-6661-4338-aee2-2fd584636e11",
+        "content": "SilverRapidDeliveryNearestDrivers\n| extend OrderTime = ingestion_time()\n| join kind=inner (FabrikamDeliveryTrucks) on $left.TruckID==$right.TruckID\n| where OrderTime >= ago(5m)\n| project tostring(SalesOrderNumber),\nOrderTime,PickupAddressLine1,PickupAddressLine2,PickupPostalCode ,Fullname,\nTruckEntraID\n| sort by OrderTime,SalesOrderNumber",
+        "title": "Truck Notifications",
+        "dataSourceId": "8f60e5c6-2587-44ad-9ab4-952a2e21e7e5"
+      }
+    ]
+  }
+}

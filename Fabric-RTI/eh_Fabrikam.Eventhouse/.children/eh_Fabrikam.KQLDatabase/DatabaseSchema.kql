@@ -1,0 +1,83 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table StandardDelivery (SalesOrderNumber:long, ShipDate:string, OrderDate:string, OrderTime:string, DueDate:string, DueTime:string, CustomerKey:string, ProductKey:long, SalesTerritoryKey:long, RevisionNumber:long, OrderQuantity:long, UnitPrice:real, DiscountAmount:real, ProductStandardCost:real, IsRapidDelivery:long, IsRapidDeliveryLarge:long) with (folder = "Bronze") 
+.create-merge table RapidDelivery (SalesOrderNumber:long, ShipDate:string, OrderDate:string, OrderTime:string, DueDate:string, DueTime:string, CustomerKey:string, ProductKey:long, SalesTerritoryKey:long, RevisionNumber:long, OrderQuantity:long, UnitPrice:real, DiscountAmount:real, ProductStandardCost:real, IsRapidDelivery:long, IsRapidDeliveryLarge:long) with (folder = "Bronze") 
+.create-merge table TruckMovement (TruckID:string, latitude:real, longitude:real, EventProcessedUtcTime:datetime, PartitionId:string, EventEnqueuedUtcTime:datetime) with (folder = "Bronze") 
+.create-or-alter table TruckMovement ingestion json mapping 'TruckMovement_mapping'
+```
+[{"Properties":{"Path":"$['TruckID']"},"column":"TruckID","datatype":""},{"Properties":{"Path":"$['latitude']"},"column":"latitude","datatype":""},{"Properties":{"Path":"$['longitude']"},"column":"longitude","datatype":""},{"Properties":{"Path":"$['EventProcessedUtcTime']"},"column":"EventProcessedUtcTime","datatype":""},{"Properties":{"Path":"$['PartitionId']"},"column":"PartitionId","datatype":""},{"Properties":{"Path":"$['EventEnqueuedUtcTime']"},"column":"EventEnqueuedUtcTime","datatype":""}]
+```
+.create-merge table FabrikamCustomers (CustomerID:string, FullName:string, Address:string, State:string, ZipCode:string, Latitude:real, Longitude:real) with (folder = "Bronze") 
+.create-merge table FabrikamResellers (ResellerID:long, ResellerName:string, DeliveryAddressLine1:string, DeliveryAddressLine2:string, DeliveryPostalCode:long, Latitude:real, Longitude:real, ResellerEntraID:string) with (folder = "Bronze") 
+.create-merge table FabrikamResellerInventory (PostalCityID:long, PhoneNumber:string, FaxNumber:string, WebsiteURL:string, DeliveryAddressLine1:string, DeliveryAddressLine2:string, DeliveryPostalCode:long, PostalAddressLine1:string, PostalAddressLine2:string, PostalPostalCode:string, ResellerID:long, ResellerName:string, ResellerCompany:string, StockItemID:long, StockItemName:string, InventoryLevel:long, Latitude:real, Longitude:real) with (folder = "Bronze") 
+.create-merge table FabrikamProducts (StockItemID:long, StockItemName:string, SupplierID:long, Size:string, IsChillerStock:bool, TaxRate:real, UnitPrice:decimal, RecommendedRetailPrice:decimal, TypicalWeightPerUnit:real, StockGroupName:string, StockGroupID:long) with (folder = "Bronze") 
+.create-merge table FabrikamDeliveryTrucks (TruckID:real, TruckType:string, Fullname:string, TruckEntraID:string, StartDate:datetime) with (folder = "Bronze") 
+.create-merge table SilverRapidOrders (SalesOrderNumber:long, OrderDate:datetime, OrderTime:string, CustomerKey:string, CustomerName:string, CustomerAddress:string, CustomerPostalCode:string, ProductKey:long, OrderQuantity:long, UnitPrice:real, DiscountAmount:real, ProductStandardCost:real, TotalProductCost:real, TotalSalesAmount:real, TaxAmt:real, Freight:real, ExtendedAmount:real, ProductCategory:string, ProductName:string, ResellerName:string, ResellerAddressLine1:string, ResellerAddressLine2:string, ResellerPostalCode:long, ResellerLatitude:real, ResellerLongitude:real, ResellerEntraID:string, CustomerDistanceToReseller:real, IsRapidDelivery:long) with (folder = "Silver") 
+.create-merge table SilverRapidDeliveryNearestDrivers (SalesOrderNumber:long, OrderDate:datetime, OrderTime:string, CustomerName:string, DeliveryAddress:string, DeliveryPostalCode:string, ProductName:string, OrderQuantity:long, ResellerName:string, PickupAddressLine1:string, PickupAddressLine2:string, PickupPostalCode:long, CustomerDistanceToReseller:real, TruckDistanceToReseller:real, TruckEntraID:string, TruckID:real) with (folder = "Silver") 
+.create-or-alter function with (docstring = "Add additional columns and data enrichment", skipvalidation = "true") fn_SilverRapidOrders() {
+RapidDelivery
+| join kind = inner (FabrikamProducts) on ($left.ProductKey == $right.StockItemID)
+| join kind = inner (FabrikamCustomers) on ($left.CustomerKey == $right.CustomerID)
+| extend key = 1
+| join kind = inner (FabrikamResellers | extend key = 1) on key
+| extend DiscountAmount = toreal(DiscountAmount)
+| extend ProductStandardCost = toreal(ProductStandardCost) 
+| extend UnitPrice = toreal(UnitPrice)
+| extend OrderDate = todatetime(OrderDate)
+| extend ShipDate = todatetime(ShipDate)
+| extend DueDate = todatetime(DueDate)
+| extend TotalProductCost = toreal(ProductStandardCost * OrderQuantity)
+| extend TotalSalesAmount = toreal(UnitPrice * OrderQuantity)
+| extend TaxAmt = TotalSalesAmount * 0.08875
+| extend Freight = 10.00
+| extend ExtendedAmount = TotalSalesAmount + Freight + TaxAmt 
+| extend CustomerDistanceToReseller = 
+geo_distance_2points(Latitude, Longitude, Latitude1, Longitude1)
+| summarize arg_min(CustomerDistanceToReseller, *) by SalesOrderNumber
+| project SalesOrderNumber, OrderDate, OrderTime, CustomerKey, 
+CustomerName = FullName, CustomerAddress = Address,
+CustomerPostalCode = ZipCode, ProductKey, OrderQuantity, 
+UnitPrice, DiscountAmount, ProductStandardCost, 
+TotalProductCost, TotalSalesAmount, TaxAmt, Freight,
+ExtendedAmount, ProductCategory = StockGroupName, 
+ProductName = StockItemName, ResellerName, 
+ResellerAddressLine1 = DeliveryAddressLine1,
+ResellerAddressLine2 = DeliveryAddressLine2, 
+ResellerPostalCode = DeliveryPostalCode, ResellerLatitude = Latitude,
+ResellerLongitude = Longitude, ResellerEntraID, 
+CustomerDistanceToReseller, IsRapidDelivery = tolong(IsRapidDelivery)
+}
+.create-or-alter function with (docstring = "Add additional columns and data enrichment. Find three nearest drivers.", skipvalidation = "true") fn_SilverRapidDeliveryNearestDrivers() {
+SilverRapidOrders
+| extend key = 1
+| join kind = inner 
+(TruckMovement |  extend key = 1) on key
+| summarize arg_max(EventProcessedUtcTime, *) by TruckIDClean = toreal(TruckID), SalesOrderNumber
+| join kind = inner 
+(FabrikamDeliveryTrucks) on $left.TruckIDClean == $right.TruckID
+| extend TruckDistanceToReseller = geo_distance_2points(latitude, longitude, ResellerLatitude, ResellerLongitude)
+| extend OrderDate = todatetime(OrderDate)
+| extend IsRapidDelivery = tolong(IsRapidDelivery)
+| project 
+    SalesOrderNumber,  OrderDate, OrderTime, CustomerName, 
+    DeliveryAddress = CustomerAddress,
+    DeliveryPostalCode = CustomerPostalCode, ProductName, 
+    OrderQuantity, ResellerName, 
+    PickupAddressLine1 = ResellerAddressLine1, 
+    PickupAddressLine2 = ResellerAddressLine2, 
+    PickupPostalCode = ResellerPostalCode, 
+    CustomerDistanceToReseller, TruckDistanceToReseller, 
+    TruckEntraID, TruckID = TruckIDClean
+| partition hint.strategy = shuffle by SalesOrderNumber (top 3 by TruckDistanceToReseller asc)
+}
+.create-or-alter materialized-view with (Folder = "Gold")  GoldRapidOrders on table SilverRapidOrders { SilverRapidOrders
+    | summarize TotalSales = sum(TotalSalesAmount), 
+    TotalQuantity = sum(OrderQuantity), NumberOfOrders = count() 
+    by OrderDate, OrderHour = substring(OrderTime, 0, 2), 
+    ProductCategory, ProductName }
+.alter table RapidDelivery policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
+.alter table SilverRapidOrders policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
+.alter table SilverRapidOrders policy update "[{\"IsEnabled\":true,\"Source\":\"RapidDelivery\",\"Query\":\"fn_SilverRapidOrders\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"IsAsync\":false}]"
+.alter table SilverRapidDeliveryNearestDrivers policy update "[{\"IsEnabled\":true,\"Source\":\"SilverRapidOrders\",\"Query\":\"fn_SilverRapidDeliveryNearestDrivers\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"IsAsync\":false}]"

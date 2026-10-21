@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventstream",
+    "displayName": "es_Fabrikam_TruckMovement"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "618735f7-7d11-8b0e-4731-3b35c719bc86"
+  }
+}

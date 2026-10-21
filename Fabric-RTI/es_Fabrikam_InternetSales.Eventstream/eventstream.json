@@ -1,0 +1,552 @@
+{
+  "sources": [
+    {
+      "id": "e3b19808-c2b3-4b31-88b6-ce708b94fe53",
+      "name": "azure-event-hub",
+      "type": "AzureEventHubExtended",
+      "properties": {
+        "dataConnectionId": "ca422ec4-e28b-42e3-9da7-ab677717c5d0",
+        "consumerGroupName": "$Default",
+        "startPosition": "Latest"
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "id": "3b8eff61-10d7-4f86-9b99-32132994dd62",
+      "name": "eh-StandardDelivery",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e",
+        "databaseName": "eh_Fabrikam",
+        "tableName": "StandardDelivery",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "StandardDelivery"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "StandardDelivery",
+          "schema": {
+            "columns": [
+              {
+                "name": "SalesOrderNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ShipDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "CustomerKey",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "SalesTerritoryKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "RevisionNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderQuantity",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "UnitPrice",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DiscountAmount",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductStandardCost",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDelivery",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDeliveryLarge",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "c2313090-0be0-4be8-a57b-2a1d6ee9b364",
+      "name": "eh-RapidDelivery",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e",
+        "databaseName": "eh_Fabrikam",
+        "tableName": "RapidDelivery",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "RapidDelivery"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "RapidDelivery",
+          "schema": {
+            "columns": [
+              {
+                "name": "SalesOrderNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ShipDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "CustomerKey",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "SalesTerritoryKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "RevisionNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderQuantity",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "UnitPrice",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DiscountAmount",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductStandardCost",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDelivery",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDeliveryLarge",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "80147405-4941-4713-9502-dc58572dc8bd",
+      "name": "es_Fabrikam_InternetSales-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "azure-event-hub"
+        }
+      ]
+    }
+  ],
+  "operators": [
+    {
+      "name": "RapidDelivery",
+      "type": "Filter",
+      "inputNodes": [
+        {
+          "name": "es_Fabrikam_InternetSales-stream"
+        }
+      ],
+      "properties": {
+        "conditions": [
+          {
+            "column": {
+              "expressionType": "ColumnReference",
+              "node": null,
+              "columnName": "IsRapidDelivery",
+              "columnPathSegments": []
+            },
+            "operatorType": "Equals",
+            "value": {
+              "expressionType": "Literal",
+              "dataType": "BigInt",
+              "value": "1"
+            }
+          }
+        ]
+      },
+      "inputSchemas": [
+        {
+          "name": "es_Fabrikam_InternetSales-stream",
+          "schema": {
+            "columns": [
+              {
+                "name": "SalesOrderNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ShipDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "CustomerKey",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "SalesTerritoryKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "RevisionNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderQuantity",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "UnitPrice",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DiscountAmount",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductStandardCost",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDelivery",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDeliveryLarge",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "StandardDelivery",
+      "type": "Filter",
+      "inputNodes": [
+        {
+          "name": "es_Fabrikam_InternetSales-stream"
+        }
+      ],
+      "properties": {
+        "conditions": [
+          {
+            "column": {
+              "expressionType": "ColumnReference",
+              "node": null,
+              "columnName": "IsRapidDelivery",
+              "columnPathSegments": []
+            },
+            "operatorType": "Equals",
+            "value": {
+              "expressionType": "Literal",
+              "dataType": "BigInt",
+              "value": "0"
+            }
+          }
+        ]
+      },
+      "inputSchemas": [
+        {
+          "name": "es_Fabrikam_InternetSales-stream",
+          "schema": {
+            "columns": [
+              {
+                "name": "SalesOrderNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ShipDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueDate",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DueTime",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "CustomerKey",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "SalesTerritoryKey",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "RevisionNumber",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "OrderQuantity",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "UnitPrice",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "DiscountAmount",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "ProductStandardCost",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDelivery",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "IsRapidDeliveryLarge",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "compatibilityLevel": "1.1"
+}

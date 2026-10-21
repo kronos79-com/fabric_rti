@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLQueryset",
+    "displayName": "Create External Tables",
+    "description": "Create External Tables"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "aa85112c-9021-a14f-4634-79ece4656f74"
+  }
+}

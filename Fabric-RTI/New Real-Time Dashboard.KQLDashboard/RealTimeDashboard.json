@@ -1,0 +1,303 @@
+{
+  "schema_version": 88,
+  "flavor": "RTDashboard_Regular",
+  "changeDetection": {
+    "kind": "liveUpdates",
+    "minRefreshRate": "10s",
+    "fallbackRefreshRate": "30s",
+    "minRefreshRate_V2": "10s"
+  },
+  "tiles": [
+    {
+      "id": "178b6d6b-18e8-4e58-a0ff-084f4d1698da",
+      "title": "Order Total",
+      "visualType": "card",
+      "pageId": "fa20563b-36dd-4fb3-8619-e107bdde6ea6",
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 3,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "268d87e0-bdb3-4106-888b-ec15d5ceff79"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorRules": []
+      }
+    },
+    {
+      "id": "8382c4dc-e00d-4962-9d2c-062e281ca1ed",
+      "title": "# Orders Every 5 Minutes",
+      "visualType": "column",
+      "pageId": "fa20563b-36dd-4fb3-8619-e107bdde6ea6",
+      "layout": {
+        "x": 9,
+        "y": 0,
+        "width": 15,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "77788ce6-9d8b-4427-8409-cc429b656b4c"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "seriesColors": {},
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "4e5eea16-0682-4d15-8e9a-421bb121f5b4",
+      "title": "Most Recent 25 orders",
+      "visualType": "table",
+      "pageId": "fa20563b-36dd-4fb3-8619-e107bdde6ea6",
+      "layout": {
+        "x": 9,
+        "y": 7,
+        "width": 9,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "34704a0f-29ac-4f90-bd25-1352945597bf"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": false,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": [
+          {
+            "id": "dabd0038-db74-4ecd-b90f-7d408a6ef11a",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": ">",
+                "column": "TotalSalesAmount",
+                "values": [
+                  "150"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "red",
+            "tag": "",
+            "icon": "warning",
+            "ruleName": "Potential Fraud",
+            "visualType": "table"
+          }
+        ]
+      }
+    },
+    {
+      "id": "3e972641-c050-48dd-bb23-672a375c8908",
+      "title": "Orders By Reseller for Last Hour",
+      "visualType": "bar",
+      "pageId": "fa20563b-36dd-4fb3-8619-e107bdde6ea6",
+      "layout": {
+        "x": 18,
+        "y": 7,
+        "width": 6,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "7b7b34f5-17d8-4df5-ab49-4f9142f8ce35"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "seriesColors": {},
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "aa30e50c-bdca-4d82-9b4b-0551d5f26d10",
+      "title": "Truck Positions",
+      "visualType": "map",
+      "pageId": "fa20563b-36dd-4fb3-8619-e107bdde6ea6",
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "width": 9,
+        "height": 12
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "d40b250f-f261-4bfb-ba92-76061b82e3c8"
+      },
+      "visualOptions": {
+        "map__latitudeColumn": "longitude",
+        "map__longitudeColumn": "latitude",
+        "map__labelColumn": "TruckID",
+        "map__sizeColumn": null,
+        "map__sizeDisabled": true,
+        "map__geoType": "numeric",
+        "map__geoPointColumn": null
+      }
+    },
+    {
+      "id": "0466e8fe-5c01-4114-a0d1-10aae5864af2",
+      "title": "",
+      "visualType": "markdownCard",
+      "pageId": "fa20563b-36dd-4fb3-8619-e107bdde6ea6",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      },
+      "markdownText": "![Fabrikam](https://github.com/PragmaticWorksTraining/DIAD/blob/main/Logos/Fabrikam.png?raw=true \"Fabrikam\")",
+      "visualOptions": {}
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "09633fc4-e4c1-4431-9651-ccf9604d9501",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "47df05c3-b6db-4382-8efb-1866eacb8bf0",
+      "kind": "kusto-trident",
+      "name": "eh_Fabrikam",
+      "clusterUri": "",
+      "databaseArtifactId": "572e0b5e-68fa-42d7-b80e-13e1cbe2c71f",
+      "database": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Page 1",
+      "id": "fa20563b-36dd-4fb3-8619-e107bdde6ea6"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "47df05c3-b6db-4382-8efb-1866eacb8bf0"
+      },
+      "text": "SilverRapidOrders\n| where ingestion_time() between (_startTime.._endTime)\n| count",
+      "id": "268d87e0-bdb3-4106-888b-ec15d5ceff79",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "47df05c3-b6db-4382-8efb-1866eacb8bf0"
+      },
+      "text": "SilverRapidOrders\r\n| where ingestion_time() between (_startTime .. _endTime)\r\n| summarize OrderCount = count() by bin(ingestion_time(),5m)\r\n| sort by ingestion_time()",
+      "id": "77788ce6-9d8b-4427-8409-cc429b656b4c",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "47df05c3-b6db-4382-8efb-1866eacb8bf0"
+      },
+      "text": "SilverRapidOrders\r\n| project\r\ntostring(SalesOrderNumber), ProductName,\r\nOrderTimestamp = ingestion_time(), round(TotalSalesAmount,2)\r\n| top 25 by OrderTimestamp desc",
+      "id": "34704a0f-29ac-4f90-bd25-1352945597bf",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "47df05c3-b6db-4382-8efb-1866eacb8bf0"
+      },
+      "text": "SilverRapidOrders\r\n| project SalesOrderNumber, ResellerName, OrderTimestamp = ingestion_time()\r\n| where OrderTimestamp >= ago(60m)\r\n| summarize OrderCount = count() by ResellerName\r\n| order by ResellerName asc",
+      "id": "7b7b34f5-17d8-4df5-ab49-4f9142f8ce35",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "47df05c3-b6db-4382-8efb-1866eacb8bf0"
+      },
+      "text": "TruckMovement\r\n| summarize arg_max(EventProcessedUtcTime,*) by NewTruckID = toreal(TruckID)\r\n| project TruckID,latitude,longitude,EventProcessedUtcTime\r\n| sort by TruckID asc",
+      "id": "d40b250f-f261-4bfb-ba92-76061b82e3c8",
+      "usedVariables": []
+    }
+  ],
+  "embeddedApps": []
+}

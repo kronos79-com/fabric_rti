@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLQueryset",
+    "displayName": "Rapid Delivery Dashboard Query",
+    "description": "Rapid Delivery Dashboard Query"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cd99382c-796a-bd0f-435d-1482b0aae263"
+  }
+}

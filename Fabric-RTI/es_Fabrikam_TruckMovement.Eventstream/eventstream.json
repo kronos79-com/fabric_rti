@@ -1,0 +1,99 @@
+{
+  "sources": [
+    {
+      "id": "975f4094-af0a-472f-b3b4-b86c55d75ba9",
+      "name": "rti-iad-trucks",
+      "type": "AzureEventHub",
+      "properties": {
+        "dataConnectionId": "a7430807-36a2-46af-9e83-d472f54170e7",
+        "consumerGroupName": "$Default",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "id": "b3a28686-705b-4314-bcec-5613fabe8ceb",
+      "name": "eh-TruckMovement",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "cbe2c71f-13e1-b80e-42d7-68fa572e0b5e",
+        "tableName": "TruckMovement",
+        "connectionName": "eh_Fabrikam_es_TruckMovement",
+        "mappingRuleName": "TruckMovement_mapping"
+      },
+      "inputNodes": [
+        {
+          "name": "es_Fabrikam_TruckMovement-stream"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "es_Fabrikam_TruckMovement-stream",
+          "schema": {
+            "columns": [
+              {
+                "name": "TruckID",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "latitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "longitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "EventProcessedUtcTime",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "PartitionId",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "EventEnqueuedUtcTime",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "a5ce199b-f903-4582-bfd1-919fa8e8e545",
+      "name": "es_Fabrikam_TruckMovement-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "rti-iad-trucks"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.1"
+}
